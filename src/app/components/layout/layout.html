@@ -1,0 +1,18 @@
+<div>
+  @if (appLoading()) {
+    <div
+      class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2"
+    >
+      <lucide-icon [img]="LoaderIcon" class="w-8 h-8 text-primary animate-spin"></lucide-icon>
+      <span class="text-sm text-muted-foreground font-medium">Loading NoteHub...</span>
+    </div>
+  } @else {
+    <div class="flex min-h-screen bg-background">
+      <app-sidebar></app-sidebar>
+
+      <main class="flex-1 min-w-0 overflow-auto">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  }
+</div>

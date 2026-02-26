@@ -1,0 +1,53 @@
+<aside class="flex flex-col w-[200px] min-h-screen border-r border-border bg-card">
+  <div class="flex items-center gap-2.5 pl-[1rem] py-5 h-[5rem]">
+    <div class="flex items-center justify-center w-[2rem] h-[2rem] mr-[1rem] rounded-md bg-primary">
+      <lucide-icon [img]="BrainCircuit" class="w-5 h-5 text-primary-foreground"></lucide-icon>
+    </div>
+    <span class="text-[1.2rem] font-[1000] text-foreground tracking-tight"> NoteHub </span>
+  </div>
+
+  <nav class="flex-1 px-[0.5rem] py-[1.6rem]">
+    <ul class="flex flex-col gap-1 list-none p-0 m-0">
+      @for (item of navItems; track item.href) {
+        <li class="h-[2.8rem] mb-[0.3rem]">
+          <a
+            [routerLink]="item.href"
+            routerLinkActive="bg-sidebar-accent text-primary"
+            [routerLinkActiveOptions]="{ exact: item.href === '/dashboard' }"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-[800] transition-colors no-underline text-muted-foreground hover:bg-secondary hover:text-foreground h-full"
+            #rla="routerLinkActive"
+          >
+            <lucide-icon
+              [img]="item.icon"
+              class="w-4 h-4 mx-[0.8rem]"
+              [class.text-primary]="rla.isActive"
+            >
+            </lucide-icon>
+            {{ item.label }}
+          </a>
+        </li>
+      }
+    </ul>
+  </nav>
+
+  @if (user.isAuthenticated) {
+    <div class="flex items-center border-t border-border px-4 py-4 h-[3.6rem] mt-auto">
+      <div class="flex items-center w-full ml-[0.3rem]">
+        <div
+          class="w-[2rem] h-[2rem] rounded-full bg-accent flex items-center justify-center text-xs font-semibold text-accent-foreground"
+        >
+          {{ getUserInitials(user.email) }}
+        </div>
+        <div class="flex-1 min-w-0 ml-[0.3rem]">
+          <p class="text-sm font-medium text-foreground truncate">
+            {{ user.email }}
+          </p>
+        </div>
+        <lucide-icon
+          [img]="ChevronRight"
+          class="w-4 h-4 text-muted-foreground ml-auto"
+        ></lucide-icon>
+      </div>
+    </div>
+  }
+</aside>
