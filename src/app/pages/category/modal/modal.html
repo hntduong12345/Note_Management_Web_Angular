@@ -1,0 +1,40 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-foreground/50">
+  <div class="w-[25rem] max-w-sm p-[1.5rem] bg-card rounded-md border border-border shadow-xl">
+    <div class="flex items-center justify-between mb-[1rem]">
+      <h2 class="text-[1.4rem] font-[600] text-foreground">New Category</h2>
+      <button
+        (click)="close.emit()"
+        class="text-muted-foreground hover:text-foreground bg-transparent border-0 cursor-pointer"
+      >
+        <lucide-icon [img]="XIcon" class="w-[1.2rem] h-[1.2rem]"></lucide-icon>
+      </button>
+    </div>
+
+    <div class="flex flex-col gap-[1rem]">
+      <div>
+        <label class="text-[1rem] font-[500] text-foreground mb-[0.25rem] block">Name</label>
+        <input
+          type="text"
+          [(ngModel)]="cateName"
+          placeholder="Category name"
+          class="w-[94%] px-[0.75rem] py-[0.5rem] rounded-lg border border-border bg-card text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring/30"
+        />
+      </div>
+      <div>
+        <label class="text-[1rem] font-[500] text-foreground mb-[0.5rem] block">Icon</label>
+        <input
+          type="file"
+          accept="image/*"
+          (change)="onFileSelected($event)"
+          class="w-[94%] px-[0.75rem] py-[0.5rem] rounded-lg border border-border bg-card text-foreground text-sm"
+        />
+      </div>
+      <button
+        (click)="submit()"
+        class="w-full py-[0.6rem] rounded-lg bg-primary text-primary-foreground text-sm font-[600] hover:opacity-90 transition-opacity mt-[0.5rem]"
+      >
+        Create Category
+      </button>
+    </div>
+  </div>
+</div>

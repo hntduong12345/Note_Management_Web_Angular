@@ -1,9 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { LucideAngularModule, X } from 'lucide-angular';
 
 @Component({
   selector: 'app-modal',
-  imports: [],
-  template: ` <p>modal works!</p> `,
-  styles: ``,
+  standalone: true,
+  imports: [CommonModule, FormsModule, LucideAngularModule],
+  templateUrl: `modal.html`,
 })
-export class Modal {}
+export class Modal {
+  readonly XIcon = X;
+
+  // Declare variables
+  cateName = '';
+  selectedFile: File | null = null;
+
+  // Events State
+  close = output<void>();
+  create = output<{ name: string; icon: File | null }>();
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
+
+  submit() {
+    if (this.cateName.trim()) {
+      this.create.emit({ name: this.cateName, icon: this.selectedFile });
+    }
+  }
+}
