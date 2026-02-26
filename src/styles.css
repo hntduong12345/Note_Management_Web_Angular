@@ -1,3 +1,90 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+/* 1. DEFINE THE THEME (Copied from your React global.css) */
+@theme {
+  --font-sans: 'Geist', 'Geist Fallback';
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+
+  /* Shadcn UI Colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Sidebar Colors (Fixes your error) */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-text: oklch(0.556 0 0); /* Define the missing link */
+  --color-sidebar-hover: oklch(0.97 0 0);
+  --color-sidebar-text-active: oklch(0.205 0 0);
+
+  --radius-lg: var(--radius);
+}
+
+/* 2. DEFINE THE VARIABLES (The OKLCH values) */
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+}
+
+/* 3. BASE STYLES */
+@layer base {
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+/* 4. REUSABLE COMPONENTS (Your Angular logic) */
+@layer components {
+  .btn-primary {
+    @apply w-full py-2.5 px-4 bg-primary text-primary-foreground rounded-lg font-medium
+           hover:opacity-90 transition-opacity duration-200 text-sm;
+  }
+  .input-field {
+    @apply w-full px-3 py-2.5 border border-input rounded-lg text-sm
+           placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring
+           transition-all duration-200 bg-background;
+  }
+  .input-label {
+    @apply block text-sm font-medium text-foreground mb-1.5;
+  }
+  .sidebar-link {
+    @apply flex items-center gap-3 px-3 py-2 text-sm text-sidebar-text rounded-lg
+           hover:bg-sidebar-hover transition-colors duration-150 cursor-pointer;
+  }
+  .sidebar-link-active {
+    @apply bg-sidebar-hover text-sidebar-text-active font-medium;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 3px;
+}
