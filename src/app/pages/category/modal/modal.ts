@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { LucideAngularModule, X } from 'lucide-angular';
 
 @Component({
-  selector: 'app-modal',
+  selector: 'app-category-modal',
   standalone: true,
   imports: [CommonModule, FormsModule, LucideAngularModule],
   templateUrl: `modal.html`,
 })
-export class Modal {
+export class CategoryModal {
   readonly XIcon = X;
 
   // Declare variables
