@@ -23,6 +23,10 @@ export const routes: Routes = [
         path: 'dashboard',
         loadComponent: () => import('./pages/dashboard/dashboard').then((m) => m.Dashboard),
       },
+      {
+        path: 'notes',
+        loadComponent: () => import('./pages/note-editor/note-editor').then((m) => m.NoteEditor),
+      },
     ],
   },
 ];
