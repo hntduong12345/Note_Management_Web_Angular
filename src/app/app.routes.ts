@@ -31,6 +31,10 @@ export const routes: Routes = [
         path: 'categories',
         loadComponent: () => import('./pages/category/category').then((m) => m.Category),
       },
+      {
+        path: 'trash',
+        loadComponent: () => import('./pages/trash/trash').then((m) => m.Trash),
+      },
     ],
   },
 ];
