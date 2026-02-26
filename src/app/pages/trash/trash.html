@@ -1,0 +1,69 @@
+<div class="flex flex-col h-full px-[2rem] py-[1rem]">
+  <header class="flex items-center justify-between mb-[2rem]">
+    <div>
+      <h1 class="text-[1.6rem] font-[600] text-foreground">Trash</h1>
+      <p class="text-[1rem] text-muted-foreground mt-[0.3rem]">Temporary deleted notes storage</p>
+    </div>
+  </header>
+
+  <div class="flex flex-col pb-8">
+    @if (trashedNotes().length === 0) {
+      <div class="flex flex-col items-center justify-center py-[5rem] text-muted-foreground">
+        <lucide-icon [img]="TrashIcon" class="w-12 h-12 mb-4 opacity-20"></lucide-icon>
+        <p class="text-[1rem]">Trash is empty</p>
+      </div>
+    } @else {
+      <div class="bg-card rounded-[0.5rem] border border-border overflow-hidden shadow-sm">
+        <div
+          class="grid grid-cols-[1fr_150px_180px] px-[1.5rem] py-[0.75rem] border-b border-border bg-secondary/50"
+        >
+          <span class="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            Note Title
+          </span>
+          <span class="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            Deleted Date
+          </span>
+          <span
+            class="text-xs font-semibold text-muted-foreground uppercase tracking-wider text-right"
+          >
+            Actions
+          </span>
+        </div>
+
+        @for (note of trashedNotes(); track note.id) {
+          <div
+            class="grid grid-cols-[1fr_150px_180px] items-center px-[1.5rem] py-[0.75rem] border-b border-border last:border-b-0 hover:bg-secondary/30 transition-colors"
+          >
+            <div class="min-w-0 pr-4">
+              <h3 class="text-sm font-semibold text-foreground truncate">
+                {{ note.title }}
+              </h3>
+              <p class="text-xs text-muted-foreground truncate mt-0.5">
+                {{ note.content }}
+              </p>
+            </div>
+
+            <span class="text-sm text-muted-foreground">
+              {{ note.trashedAt }}
+            </span>
+
+            <div class="flex items-center justify-end gap-[1rem]">
+              <button
+                (click)="restoreNote(note.id)"
+                class="text-sm font-medium text-[#3b82f6] hover:underline bg-transparent border-0 cursor-pointer"
+              >
+                Restore
+              </button>
+              <!-- <button
+                (click)="deleteForever(note.id)"
+                class="text-sm font-medium text-destructive hover:underline bg-transparent border-0 cursor-pointer"
+              >
+                Delete
+              </button> -->
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
