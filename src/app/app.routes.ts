@@ -27,6 +27,10 @@ export const routes: Routes = [
         path: 'notes',
         loadComponent: () => import('./pages/note-editor/note-editor').then((m) => m.NoteEditor),
       },
+      {
+        path: 'categories',
+        loadComponent: () => import('./pages/category/category').then((m) => m.Category),
+      },
     ],
   },
 ];
