@@ -1,0 +1,104 @@
+<div class="flex flex-col h-full">
+  <header
+    class="flex items-center justify-between px-8 py-3 border-b border-border bg-card h-[5rem]"
+  >
+    <div class="flex items-center gap-2 text-sm text-muted-foreground ml-[1rem]">
+      @if (!saved()) {
+        <lucide-icon [img]="AlertIcon" class="w-4 h-4 text-destructive"></lucide-icon>
+      }
+      <span>{{ saved() ? 'All changes saved' : 'Unsaved changes' }}</span>
+    </div>
+
+    <button
+      (click)="saveNote()"
+      class="flex items-center gap-2 px-[1.2rem] py-[0.6rem] rounded-lg bg-primary text-primary-foreground text-sm font-[600] hover:opacity-90 transition-opacity mr-[1rem]"
+    >
+      <lucide-icon [img]="SaveIcon" class="w-4 h-4 mr-[0.2rem]"></lucide-icon>
+      Save Note
+    </button>
+  </header>
+
+  <div class="flex flex-1 overflow-hidden">
+    <div class="flex-1 pt-[2rem] pl-[2rem] overflow-auto">
+      <input
+        type="text"
+        placeholder="Untitled Note"
+        [(ngModel)]="title"
+        (ngModelChange)="handleContentChange()"
+        class="w-full text-[2.2rem] font-light text-foreground placeholder:text-muted-foreground/50 bg-transparent border-none focus:outline-none mb-4"
+      />
+      <textarea
+        placeholder="Start typing your thoughts..."
+        [(ngModel)]="content"
+        (ngModelChange)="handleContentChange()"
+        class="w-full min-h-[60vh] text-sm text-muted-foreground leading-relaxed bg-transparent border-none focus:outline-none resize-none"
+      ></textarea>
+    </div>
+
+    <aside
+      class="w-[260px] border-l border-border bg-secondary/30 p-6 overflow-auto pt-[1rem] px-[1rem]"
+    >
+      <h2 class="text-[1rem] font-[700] uppercase tracking-wider text-foreground mb-[0.8rem]">
+        Note Details
+      </h2>
+
+      <div class="mb-[1.6rem]">
+        <label class="text-xs font-semibold text-[#3b82f6] mb-[0.8rem] block">Category</label>
+        <select
+          [(ngModel)]="category"
+          (ngModelChange)="handleContentChange()"
+          class="w-full px-[0.6rem] py-[0.4rem] rounded-lg border border-border bg-card text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring/30"
+        >
+          @for (c of categoryNames; track c) {
+            <option [value]="c">{{ c }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="mb-[1.6rem]">
+        <label class="text-xs font-semibold text-[#3b82f6] mb-[0.8rem] block">Tags</label>
+        <div class="flex flex-wrap gap-1.5 mb-[0.4rem]">
+          @for (tag of tags(); track tag.name) {
+            <span
+              class="flex items-center gap-1 text-[12px] font-medium rounded-full text-white px-[0.5rem] py-[0.1rem]"
+              [style.backgroundColor]="tag.color"
+            >
+              {{ tag.name }}
+              <button
+                (click)="removeTag(tag.name)"
+                class="hover:opacity-70 bg-transparent border-none p-0 flex items-center"
+              >
+                <lucide-icon [img]="XIcon" class="w-[0.7rem] h-[0.7rem] text-white"></lucide-icon>
+              </button>
+            </span>
+          }
+        </div>
+
+        <div class="relative mt-2">
+          <lucide-icon
+            [img]="TagIcon"
+            class="absolute left-[0.6rem] top-1/2 -translate-y-1/2 w-[1rem] h-[1rem] text-muted-foreground"
+          ></lucide-icon>
+          <input
+            type="text"
+            placeholder="Add a tag..."
+            [(ngModel)]="tagInput"
+            (keydown.enter)="addTag($event)"
+            class="w-full pl-9 pr-4 py-[0.6rem] rounded-lg border border-border bg-card text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring/30"
+          />
+        </div>
+      </div>
+
+      <div class="border-t border-border pt-4 flex flex-col gap-2">
+        <div class="flex items-center justify-between mt-[1.2rem]">
+          <span class="text-xs font-[700] text-[#3b82f6]">Created</span>
+          <span class="text-xs text-foreground">{{ '26/02/2026' }}</span>
+        </div>
+        <div class="flex items-center justify-between mt-[0.8rem]">
+          <span class="text-xs font-[700] text-[#3b82f6]">Word Count</span>
+          <span class="text-xs text-foreground">{{ wordCount() }}</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
