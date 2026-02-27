@@ -88,3 +88,16 @@
   background-color: #cbd5e1;
   border-radius: 3px;
 }
+
+/* Quill css setup */
+@import 'quill/dist/quill.snow.css';
+
+/* Optional: Make the editor borderless to match your design */
+.ql-container.ql-snow {
+  border: none !important;
+  font-size: 1rem;
+}
+.ql-toolbar.ql-snow {
+  border: none !important;
+  border-bottom: 1px solid #eee !important;
+}

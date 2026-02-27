@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LucideAngularModule, Save, Tag as TagIcon, X, CircleAlert } from 'lucide-angular';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-note-editor',
@@ -28,6 +29,9 @@ export class NoteEditor {
   tagInput = signal('');
   saved = signal(true);
 
+  sanitizer = inject(DomSanitizer);
+
+  //Change to get by api later
   categoryNames = ['Frontend', 'Backend', 'UI', 'Database', 'DevOps', 'Personal'];
 
   // Equivalent to React's wordCount useMemo
@@ -41,7 +45,9 @@ export class NoteEditor {
     if (noteId && noteId !== 'new') {
       // Mock loading existing note logic
       this.title.set('React Router Navigation');
-      this.content.set('Existing content...');
+      this.content.set(`
+  Oke oke 
+`);
       this.tags.set([{ name: 'react', color: '#3b82f6' }]);
     }
   }
