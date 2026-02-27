@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output, computed, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-note-card',
@@ -9,6 +10,13 @@ import { RouterLink } from '@angular/router';
   templateUrl: `./note-card.html`,
 })
 export class NoteCard {
+  //Setup html content
+  sanitizer = inject(DomSanitizer);
+  safeContent: SafeHtml = '';
+  @Input() set content(rawHtml: string) {
+    this.safeContent = this.sanitizer.bypassSecurityTrustHtml(rawHtml);
+  }
+
   //Input - Ouput
   @Input({ required: true }) note!: any;
   @Input() viewMode: 'grid' | 'list' = 'grid';
