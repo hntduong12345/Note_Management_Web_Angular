@@ -11,7 +11,7 @@ import { AuthService } from './auth.service';
 export class NoteService {
   private http = inject(HttpClient);
   private authService = inject(AuthService);
-  private readonly APT_URL = 'http://localhost:8080/v1/api/notes';
+  private readonly API_URL = 'http://localhost:8080/v1/api/notes';
 
   private get userId(): string {
     const id = this.authService.currentUser()?.id;
@@ -33,7 +33,7 @@ export class NoteService {
       .set('size', size.toString());
 
     return this.http.get<PageResponse<NoteResponse>>(
-      `${this.APT_URL}/users/${this.userId}/searching`,
+      `${this.API_URL}/users/${this.userId}/searching`,
       {
         params,
       },
@@ -41,19 +41,19 @@ export class NoteService {
   }
 
   getNoteDetail(id: string): Observable<NoteResponse> {
-    return this.http.get<NoteResponse>(`${this.APT_URL}/${id}`);
+    return this.http.get<NoteResponse>(`${this.API_URL}/${id}`);
   }
 
   createNote(request: NoteRequest): Observable<NoteResponse> {
-    return this.http.post<NoteResponse>(`${this.APT_URL}/users/${this.userId}`, request);
+    return this.http.post<NoteResponse>(`${this.API_URL}/users/${this.userId}`, request);
   }
 
   updateNote(noteId: string, request: NoteRequest): Observable<NoteResponse> {
-    return this.http.put<NoteResponse>(`${this.APT_URL}/${noteId}/users/${this.userId}`, request);
+    return this.http.put<NoteResponse>(`${this.API_URL}/${noteId}/users/${this.userId}`, request);
   }
 
   deleteNote(id: string): Observable<void> {
-    return this.http.patch<void>(`${this.APT_URL}/${id}`, {});
+    return this.http.patch<void>(`${this.API_URL}/${id}`, {});
   }
 
   //Refresh Utils
