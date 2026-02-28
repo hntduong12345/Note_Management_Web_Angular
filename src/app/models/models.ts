@@ -34,11 +34,11 @@ export interface Note {
 export interface NoteContent {
   title: string;
   content: string; // HTML string
-  metadata?: {
-    format: 'html' | 'json';
-    word_count?: number;
-    char_count?: number;
-  };
+  // metadata?: {
+  //   format: 'html' | 'json';
+  //   word_count?: number;
+  //   char_count?: number;
+  // };
 }
 
 // 4. Tag
