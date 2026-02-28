@@ -1,4 +1,3 @@
-// Match the PageResponse<T> from Java
 export interface PageResponse<T> {
   content: T[];
   number: number;
@@ -8,17 +7,15 @@ export interface PageResponse<T> {
   last: boolean;
 }
 
-// Match the NoteResponse DTO
-export interface NoteDTO {
+export interface NoteResponse {
   id: string;
   title: string;
-  contentBody: Record<string, any>; // Represents the Map<String, Object>
+  contentBody: Record<string, any>;
   categoryId: string;
   tags: TagDTO[];
-  updatedAt: string; // ISO String from LocalDateTime
+  updatedAt: string;
 }
 
-// Match the NoteRequest DTO
 export interface NoteRequest {
   title: string;
   contentBody: Record<string, any>;
