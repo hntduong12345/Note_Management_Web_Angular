@@ -32,13 +32,13 @@ export interface Note {
 
 // JSONB NoteContent Data
 export interface NoteContent {
+  title: string;
   content: string; // HTML string
   metadata?: {
     format: 'html' | 'json';
     word_count?: number;
     char_count?: number;
-  } & Record<string, any>; // More fields if needed
-  last_cursor_position?: number;
+  };
 }
 
 // 4. Tag
