@@ -18,7 +18,7 @@ export class AuthService {
 
   //Setup State
   currentUser = signal<UserSession | null>(this.getStoredUser());
-  isLoggedIn = computed(() => !!this.currentUser);
+  isLoggedIn = computed(() => !!this.currentUser());
 
   //Api functions
   login(request: AuthRequest): Observable<AuthResponse> {

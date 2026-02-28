@@ -34,7 +34,7 @@ export class Login {
 
     this.error.set('');
 
-    if (!emailVal || !passVal) {
+    if (!emailVal() || !passVal()) {
       this.error.set('Email and Password are required!');
       return;
     }
@@ -49,8 +49,7 @@ export class Login {
     setTimeout(() => {
       this.authService.login(request).subscribe({
         next: (response) => {
-          console.log('Login Success!');
-          // console.log('Token in Storage:', localStorage.getItem('note_hub_token'));
+          console.log('Login Successfully');
 
           this.isLoading.set(false);
           this.router.navigate(['/dashboard']);
@@ -61,8 +60,6 @@ export class Login {
           this.isLoading.set(false);
         },
       });
-      // this.router.navigate(['/dashboard']);
-      // this.isLoading.set(false);
     }, 500);
   }
 }
