@@ -66,6 +66,8 @@
             <span
               class="flex items-center gap-1 text-[12px] font-medium rounded-full text-white px-[0.5rem] py-[0.1rem]"
               [style.backgroundColor]="tag.colorCode"
+              [style.color]="tag.colorCode"
+              [style.borderColor]="tag.colorCode + '40'"
             >
               {{ tag.name }}
               <button

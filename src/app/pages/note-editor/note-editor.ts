@@ -155,12 +155,12 @@ export class NoteEditor {
         return;
       }
 
-      // Add more color code for randoming
-      const colors = ['#ef4444', '#f59e0b', '#22c55e', '#3b82f6', '#8b5cf6', '#ec4899'];
+      // Setup tag color
+      const color = this.generateTagColor(val);
       const newTag: TagDTO = {
         id: '',
         name: val,
-        colorCode: colors[this.tags().length % colors.length],
+        colorCode: color,
       };
 
       this.tags.update((prev) => [...prev, newTag]);
@@ -172,5 +172,74 @@ export class NoteEditor {
   removeTag(tagName: string) {
     this.tags.update((prev) => prev.filter((t) => t.name !== tagName));
     this.saved.set(false);
+  }
+
+  // Helper generate random color code
+  generateTagColor(tagName: string): string {
+    const colors = [
+      // Red group
+      '#ef4444', // Red
+      '#dc2626', // Red 600
+      '#b91c1c', // Red 700
+      '#fb7185', // Rose
+      '#e11d48', // Rose 600
+      '#be123c', // Rose 700
+      // Orange group
+      '#f97316', // Orange
+      '#ea580c', // Orange 600
+      '#c2410c', // Orange 700
+      '#f59e0b', // Amber
+      '#fbbf24', // Amber 400
+      '#d97706', // Amber 600
+      '#a16207', // Amber 700
+      // Yelow group
+      '#eab308', // Yellow 500
+      '#ca8a04', // Yellow 600
+      '#84cc16', // Lime 500
+      '#65a30d', // Lime 600
+      '#4d7c0f', // Lime 700
+      // Green group
+      '#22c55e', // Green 500
+      '#16a34a', // Green 600
+      '#15803d', // Green 700
+      '#14b8a6', // Teal 500
+      '#0d9488', // Teal 600
+      '#10b981', // Emerald
+      // Blue group
+      '#3b82f6', // Blue
+      '#2563eb', // Blue 600
+      '#1d4ed8', // Blue 700
+      '#60a5fa', // Light Blue
+      '#0ea5e9', // Sky 500
+      '#0284c7', // Sky 600
+      '#06b6d4', // Cyan
+      // Purple group
+      '#6366f1', // Indigo 500
+      '#4f46e5', // Indigo 600
+      '#8b5cf6', // Violet
+      '#7c3aed', // Violet 600
+      '#6d28d9', // Violet 700
+      '#a855f7', // Purple 500
+      // Pink group
+      '#ec4899', // Pink
+      '#d946ef', // Fuchsia 500
+      '#c026d3', // Fuchsia 600
+      '#f472b6', // Pink 400
+      '#db2777', // Pink 600
+      '#9d174d', // Pink 800
+      // Neutral group
+      '#64748b', // Slate 500
+      '#475569', // Slate 600
+      '#334155', // Slate 700
+      '#6b7280', // Gray 500
+      '#374151', // Gray 700
+    ];
+
+    // Take random index from the colors list
+    const randomIndex = Math.floor(Math.random() * colors.length);
+
+    // Ensure no index out of bound
+    const index = Math.abs(randomIndex) % colors.length;
+    return colors[index];
   }
 }
