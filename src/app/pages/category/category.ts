@@ -1,4 +1,4 @@
-import { Component, signal, computed, inject } from '@angular/core';
+import { Component, signal, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule, Plus } from 'lucide-angular';
 import { CategoryModal } from './modal/modal';
@@ -12,7 +12,7 @@ import { CategoryResponse } from '../../dtos/category.dto';
   imports: [CommonModule, LucideAngularModule, CategoryModal],
   templateUrl: `category.html`,
 })
-export class Category {
+export class Category implements OnInit {
   readonly PlusIcon = Plus;
   readonly defaultIcon = 'assets/default_object.png';
   private categoryService = inject(CategoryService);
@@ -25,7 +25,6 @@ export class Category {
   //   { id: 'cat_backend', name: 'Backend', icon: '', color: '#10b981' },
   //   { id: 'cat_ui', name: 'UI / UX', icon: '', color: '#8b5cf6' },
   // ]);
-
   // mockNotes = signal([
   //   { id: 1, category: 'Frontend' },
   //   { id: 2, category: 'Frontend' },
@@ -36,6 +35,10 @@ export class Category {
   categories = signal<CategoryResponse[]>([]);
 
   ngOnInit() {
+    this.loadCategories();
+  }
+
+  loadCategories() {
     this.categoryService.getAllCategories().subscribe({
       next: (res) => {
         this.categories.set(res);

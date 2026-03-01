@@ -20,7 +20,7 @@ import { CategoryResponse } from '../../dtos/category.dto';
   imports: [CommonModule, FormsModule, LucideAngularModule],
   templateUrl: `note-editor.html`,
 })
-export class NoteEditor {
+export class NoteEditor implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private noteService = inject(NoteService);

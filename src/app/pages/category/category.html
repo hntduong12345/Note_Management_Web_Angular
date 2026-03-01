@@ -25,12 +25,21 @@
             class="flex items-center justify-center w-[3rem] h-[3rem] rounded-xl mb-[1rem] bg-white"
           >
             <img
-              [src]="category.icon || defaultIcon"
+              [src]="category.iconIdentifier || defaultIcon"
               class="w-[2.4rem] h-[2.4rem] object-contain"
+              alt="category icon"
             />
           </div>
 
           <h3 class="text-base font-[600] text-foreground mb-[0.3rem]">{{ category.name }}</h3>
+          <div class="flex items-center gap-2 text-[0.7rem] text-muted-foreground mt-1">
+            <span class="px-2 py-0.5 rounded-md bg-secondary border border-border">
+              Created {{ formatDate(category.createdAt) }}
+            </span>
+          </div>
+          <!-- <button class="text-muted-foreground hover:text-destructive transition-colors">
+            <lucide-icon name="trash-2" class="w-4 h-4"></lucide-icon>
+          </button> -->
           <!-- <p class="text-[0.75rem] text-muted-foreground mb-[1rem]">
             {{ count }} {{ count === 1 ? 'note' : 'notes' }}
           </p> -->
@@ -38,6 +47,10 @@
           <!-- <a href="#" class="text-[0.75rem] font-[500] text-[#3b82f6] hover:underline mt-auto">
             View Notes →
           </a> -->
+        </div>
+      } @empty {
+        <div class="col-span-full flex flex-col items-center py-20 text-muted-foreground">
+          <p>You haven't created any categories yet.</p>
         </div>
       }
     </div>
