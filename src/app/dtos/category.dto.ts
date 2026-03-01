@@ -1,6 +1,6 @@
 export interface CategoryRequest {
   name: string;
-  iconIdentifier: string;
+  iconIdentifier: File;
 }
 
 export interface CategoryResponse {

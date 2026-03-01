@@ -6,6 +6,7 @@
     </div>
     <button
       (click)="showModal.set(true)"
+      [disabled]="isUploading()"
       class="flex items-center gap-2 px-[0.6rem] py-[0.3rem] rounded-lg bg-primary text-primary-foreground text-[0.8rem] font-[700] hover:opacity-85 transition-opacity"
     >
       <lucide-icon [img]="PlusIcon" class="w-[1rem] mr-[0.4rem]"></lucide-icon>
@@ -25,12 +26,29 @@
             class="flex items-center justify-center w-[3rem] h-[3rem] rounded-xl mb-[1rem] bg-white"
           >
             <img
-              [src]="category.icon || defaultIcon"
+              [src]="category.iconIdentifier || defaultIcon"
               class="w-[2.4rem] h-[2.4rem] object-contain"
+              alt="category icon"
             />
           </div>
 
           <h3 class="text-base font-[600] text-foreground mb-[0.3rem]">{{ category.name }}</h3>
+          <p class="text-[0.7rem] text-muted-foreground mt-1">
+            Created on {{ formatDate(category.createdAt) }}
+          </p>
+
+          <!-- <div
+            class="flex items-center justify-between mt-[1.5rem] pt-[1rem] border-t border-border/50"
+          >
+            <button
+              (click)="handleDeleteCategory(category)"
+              class="p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg transition-colors"
+              title="Delete Category"
+            >
+              <lucide-icon [img]="TrashIcon" class="w-4 h-4"></lucide-icon>
+            </button>
+          </div> -->
+
           <!-- <p class="text-[0.75rem] text-muted-foreground mb-[1rem]">
             {{ count }} {{ count === 1 ? 'note' : 'notes' }}
           </p> -->
@@ -39,12 +57,34 @@
             View Notes →
           </a> -->
         </div>
+      } @empty {
+        <div
+          class="col-span-full flex flex-col items-center justify-center py-20 text-muted-foreground"
+        >
+          <lucide-icon [img]="FolderIcon" class="w-12 h-12 mb-4 opacity-20"></lucide-icon>
+          <p class="text-sm">No categories found. Click "Add Category" to get started!</p>
+        </div>
       }
     </div>
   </div>
 
+  <!-- Create modal -->
   @if (showModal()) {
     <app-category-modal (close)="showModal.set(false)" (create)="handleCreateCategory($event)">
     </app-category-modal>
+  }
+
+  <!-- Loading modal -->
+  @if (isUploading()) {
+    <div
+      class="fixed inset-0 z-[100] bg-background/60 backdrop-blur-sm flex items-center justify-center"
+    >
+      <div
+        class="flex flex-col items-center gap-3 p-6 bg-card rounded-xl border border-border shadow-2xl"
+      >
+        <lucide-icon [img]="LoadingIcon" class="w-8 h-8 animate-spin text-primary"></lucide-icon>
+        <p class="font-bold text-foreground">Loading...</p>
+      </div>
+    </div>
   }
 </div>

@@ -1,10 +1,10 @@
-import { Component, signal, computed, inject } from '@angular/core';
+import { Component, signal, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule, Plus } from 'lucide-angular';
+import { LucideAngularModule, Plus, Trash2, Loader, Folder } from 'lucide-angular';
 import { CategoryModal } from './modal/modal';
 
 import { CategoryService } from '../../services/category.service';
-import { CategoryResponse } from '../../dtos/category.dto';
+import { CategoryRequest, CategoryResponse } from '../../dtos/category.dto';
 
 @Component({
   selector: 'app-category',
@@ -12,30 +12,24 @@ import { CategoryResponse } from '../../dtos/category.dto';
   imports: [CommonModule, LucideAngularModule, CategoryModal],
   templateUrl: `category.html`,
 })
-export class Category {
+export class Category implements OnInit {
   readonly PlusIcon = Plus;
+  readonly TrashIcon = Trash2;
+  readonly LoadingIcon = Loader;
+  readonly FolderIcon = Folder;
   readonly defaultIcon = 'assets/default_object.png';
+
   private categoryService = inject(CategoryService);
 
   showModal = signal(false);
-
-  // Mock Data
-  // categories = signal([
-  //   { id: 'cat_frontend', name: 'Frontend', icon: '', color: '#3b82f6' },
-  //   { id: 'cat_backend', name: 'Backend', icon: '', color: '#10b981' },
-  //   { id: 'cat_ui', name: 'UI / UX', icon: '', color: '#8b5cf6' },
-  // ]);
-
-  // mockNotes = signal([
-  //   { id: 1, category: 'Frontend' },
-  //   { id: 2, category: 'Frontend' },
-  //   { id: 3, category: 'Backend' },
-  //   { id: 4, category: 'UI / UX' },
-  // ]);
-
+  isUploading = signal(false);
   categories = signal<CategoryResponse[]>([]);
 
   ngOnInit() {
+    this.loadCategories();
+  }
+
+  loadCategories() {
     this.categoryService.getAllCategories().subscribe({
       next: (res) => {
         this.categories.set(res);
@@ -46,14 +40,55 @@ export class Category {
     });
   }
 
-  // Helper to get count
-  // getNotesCount(categoryName: string) {
-  //   return this.mockNotes().filter((n) => n.category === categoryName).length;
-  // }
+  handleCreateCategory(data: { name: string; icon: File | null }): void {
+    if (!data.name.trim()) return;
+    this.isUploading.set(true);
 
-  handleCreateCategory(data: { name: string; icon: File | null }) {
-    console.log('Creating Category:', data);
-    // Logic to call your service
-    this.showModal.set(false);
+    // Temporary add icon string value to empty string
+    const placeholderIcon = '';
+
+    const request: CategoryRequest = {
+      name: data.name,
+      iconIdentifier: data.icon as File, // Cast null to File or adjust interface to 'File | null'
+    };
+
+    this.categoryService.createCategory(request).subscribe({
+      next: (newCategory) => {
+        // Update categories data
+        this.categories.update((prev) => [newCategory, ...prev]);
+        this.isUploading.set(false);
+        this.showModal.set(false);
+      },
+      error: (err) => {
+        console.error('Upload to Cloudinary / DB Save failed:', err);
+        this.isUploading.set(false);
+      },
+    });
+  }
+
+  // Add handle update category
+
+  handleDeleteCategory(category: CategoryResponse): void {
+    // Change to notice modals for better UI
+    const confirmDelete = confirm(`Are you sure to delete category ${category.name}?`);
+
+    if (confirmDelete) {
+      this.categoryService.deleteCategory(category.id).subscribe({
+        next: () => {
+          this.categories.update((cate) => cate.filter((c) => c.id !== category.id));
+        },
+        error: (err) => {
+          console.log('Delete failed!', err);
+        },
+      });
+    }
+  }
+
+  // Helpers
+  formatDate(dateStr: string): string {
+    return new Date(dateStr).toLocaleDateString('en-US', {
+      month: 'short',
+      year: 'numeric',
+    });
   }
 }
