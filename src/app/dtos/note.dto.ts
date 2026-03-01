@@ -10,7 +10,10 @@ export interface PageResponse<T> {
 export interface NoteResponse {
   id: string;
   title: string;
-  contentBody: Record<string, any>;
+  contentBody: {
+    title: string;
+    content: string;
+  };
   categoryId: string;
   tags: TagDTO[];
   updatedAt: string;
@@ -18,7 +21,10 @@ export interface NoteResponse {
 
 export interface NoteRequest {
   title: string;
-  contentBody: Record<string, any>;
+  contentBody: {
+    title: string;
+    content: string;
+  };
   categoryId: string | null;
   tagRequest: CreateTagRequest[];
   lastSyncAt: string | null;

@@ -21,7 +21,7 @@
     <p
       class="text-xs text-muted-foreground mb-4 line-clamp-2 leading-relaxed flex-1 mx-[1rem] mt-[0.6rem]"
     >
-      {{ note.content }}
+      {{ note.contentBody.content }}
     </p>
 
     <div class="flex items-center justify-between m-[1rem]">
@@ -29,7 +29,11 @@
         <div class="flex items-center gap-1.5 overflow-hidden whitespace-nowrap max-w-full">
           @for (tag of displayedTags(); track tag.name) {
             <span
-              class="inline-block max-w-[4.2rem] truncate text-[12px] font-medium rounded-full text-card bg-gray-500 px-2 py-1 mx-[0.3rem] p-[0.3rem]"
+              class="inline-block max-w-[4.2rem] truncate text-[12px] font-medium rounded-full text-card px-2 py-1 mx-[0.3rem] p-[0.3rem]"
+              [ngClass]="{
+                'bg-gray-500': !tag.colorCode,
+              }"
+              [style.backgroundColor]="colorCode || null"
             >
               {{ tag.name }}
             </span>
