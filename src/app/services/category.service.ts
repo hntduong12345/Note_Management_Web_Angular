@@ -28,8 +28,11 @@ export class CategoryService {
   }
 
   createCategory(request: CategoryRequest): Observable<CategoryResponse> {
+    const data = new FormData();
+    data.append('name', request.name);
+    data.append('file', request.iconIdentifier || '');
     const params = new HttpParams().set('userId', this.userId);
-    return this.http.post<CategoryResponse>(this.API_URL, request, { params });
+    return this.http.post<CategoryResponse>(this.API_URL, data, { params });
   }
 
   updateCategory(request: CategoryRequest, id: string): Observable<CategoryResponse> {
